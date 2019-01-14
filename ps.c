@@ -10,7 +10,7 @@ void printProcessProperties(char *processID);
 
 void removeChars(char *string, char c);
 
-int readFilesFromDir(char* dirPath);
+int readFilesFromDir(char *dirPath);
 
 int main() {
     readFilesFromDir("/proc");
@@ -54,6 +54,9 @@ void printProcessProperties(char *processID) {
         }
     }
 
+    fclose(filePtr);
+    free(linePtr);
+
     // Convert userID from system to string
     char strUID[12];
     sprintf(strUID, "%d", getuid());
@@ -75,10 +78,6 @@ void printProcessProperties(char *processID) {
 
     // Print final output
     printf("%s %s %s\n", processID, processName, processSize);
-
-    if (linePtr) {
-        free(linePtr);
-    }
 }
 
 /**
@@ -100,7 +99,7 @@ void removeChars(char *string, char c) {
  * Reads all files from a directory.
  * @param dirPath: Read files from the directory at this path
 */
-int readFilesFromDir(char* dirPath) {
+int readFilesFromDir(char *dirPath) {
     DIR *directory;
     struct dirent *subFolder;
     directory = opendir(dirPath);
