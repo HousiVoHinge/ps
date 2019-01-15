@@ -61,6 +61,7 @@ void printProcessProperties(char *processID) {
     char strUID[12];
     sprintf(strUID, "%d", getuid());
 
+    // If the process is not owned by the current user, return.
     if (strstr(processUID, strUID) == NULL) {
         return;
     }
